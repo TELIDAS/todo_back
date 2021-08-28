@@ -3,16 +3,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, generics
 from rest_framework.response import Response
 
-from .serializers import ToDoSerializer, RegisterSerializer, TodoTextSerializer
-from .models import ToDo, TodoText
-
-
-class ToDoView(viewsets.ModelViewSet):
-    serializer_class = ToDoSerializer
-    queryset = ToDo.objects.all()
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['title',
-                        'description', ]
+from .serializers import RegisterSerializer, TodoTextSerializer
+from .models import TodoText
 
 
 class RegisterAPIView(generics.CreateAPIView):
@@ -33,7 +25,13 @@ class ToDoTextView(viewsets.ModelViewSet):
                         'text',
                         'status']
 
-    # def total_task_count(self, request, *args, **kwargs):
-    #     task_count = TodoText.objects.all().count()
-    #     content = {'task_count': task_count}
-    #     return content
+    def list(self, request, *args, **kwargs):
+        todos = self.serializer_class(self.queryset, many=True).data
+        total_count = len(self.queryset)
+
+        data = {
+            'todos': todos,
+            'total_count': total_count
+        }
+
+        return Response(data=data)

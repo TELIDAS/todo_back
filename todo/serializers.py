@@ -1,21 +1,8 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from .models import ToDo, TodoText
+from .models import TodoText
 from django.contrib.auth.models import User
-
-
-class ToDoSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(write_only=True,
-                                              queryset=User.objects.all())
-
-    class Meta:
-        model = ToDo
-        fields = ('id',
-                  'title',
-                  'description',
-                  'completed',
-                  'user')
 
 
 class TodoTextSerializer(serializers.ModelSerializer):

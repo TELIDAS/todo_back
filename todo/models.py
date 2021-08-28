@@ -13,16 +13,6 @@ STATUS_CHOICE = (
 )
 
 
-class ToDo(models.Model):
-    title = models.CharField(max_length=250)
-    description = models.TextField()
-    completed = models.IntegerField(choices=STATUS_CHOICE, verbose_name="status_completed")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_todo')
-
-    def __str__(self):
-        return self.title
-
-
 class TodoText(models.Model):
     username = models.CharField(max_length=250)
     email = models.EmailField(max_length=200)
@@ -31,4 +21,3 @@ class TodoText(models.Model):
 
     def __str__(self):
         return self.username
-
