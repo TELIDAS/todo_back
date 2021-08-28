@@ -16,11 +16,6 @@ class EDITEDObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class TodoTextSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(
-        required=True,
-        validators=[UniqueValidator(queryset=TodoText.objects.all())]
-    )
-
     class Meta:
         model = TodoText
         fields = ('id',
