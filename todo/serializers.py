@@ -1,8 +1,18 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import TodoText
 from django.contrib.auth.models import User
+
+
+class EDITEDObtainPairSerializer(TokenObtainPairSerializer):
+
+    def validate(self, attrs):
+        validated_data = super(EDITEDObtainPairSerializer, self).validate(attrs)
+        validated_data["username"] = self.user.username
+        validated_data["email"] = self.user.email
+        return validated_data
 
 
 class TodoTextSerializer(serializers.ModelSerializer):
