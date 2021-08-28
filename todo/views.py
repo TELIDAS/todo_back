@@ -24,14 +24,3 @@ class ToDoTextView(viewsets.ModelViewSet):
                         'email',
                         'text',
                         'status']
-
-    def list(self, request, *args, **kwargs):
-        todos = self.serializer_class(self.queryset, many=True).data
-        total_count = len(self.queryset)
-
-        data = {
-            'todos': todos,
-            'total_count': total_count
-        }
-
-        return Response(data=data)
